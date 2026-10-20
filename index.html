@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>치즈의 라면 끊이기</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="wash" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-crown" viewBox="0 0 64 48">
+      <path fill="#ffd84a" stroke="#fff" stroke-width="2" d="M6 40 L10 16 L22 28 L32 6 L42 28 L54 16 L58 40 Z"/>
+      <circle cx="10" cy="14" r="4" fill="#ff5fa2" stroke="#fff"/>
+      <circle cx="32" cy="8" r="4.5" fill="#ff5fa2" stroke="#fff"/>
+      <circle cx="54" cy="14" r="4" fill="#ff5fa2" stroke="#fff"/>
+      <rect x="8" y="36" width="48" height="7" rx="2" fill="#ffb3d4" stroke="#fff"/>
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 64 64">
+      <path fill="#ff5fa2" stroke="#fff" stroke-width="2" d="M32 56 C10 38 6 22 16 14 C24 8 30 14 32 18 C34 14 40 8 48 14 C58 22 54 38 32 56Z"/>
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 64 64">
+      <polygon fill="#ffe56b" stroke="#fff" stroke-width="2" points="32,4 39,24 60,24 43,36 50,56 32,44 14,56 21,36 4,24 25,24"/>
+    </symbol>
+    <symbol id="i-gem" viewBox="0 0 64 64">
+      <polygon fill="#9aecff" stroke="#fff" stroke-width="2" points="32,4 54,20 32,60 10,20"/>
+      <polygon fill="#fff" opacity=".75" points="32,4 44,20 32,22 20,20"/>
+    </symbol>
+    <symbol id="i-ribbon" viewBox="0 0 64 64">
+      <path fill="#ff8ec3" stroke="#fff" stroke-width="2" d="M32 24 C18 8 4 16 10 28 C4 40 18 38 32 30 C46 38 60 40 54 28 C60 16 46 8 32 24Z"/>
+      <circle cx="32" cy="26" r="6" fill="#ffe56b" stroke="#fff"/>
+    </symbol>
+    <symbol id="i-pearl" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="14" fill="#fff" stroke="#ffc2dd" stroke-width="2"/>
+      <circle cx="26" cy="26" r="4" fill="#fff"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="app">
+  <section id="screen-title" class="screen active">
+    <div class="garland" aria-hidden="true">
+      <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-heart"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-gem"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-ribbon"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-pearl"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-heart"/></svg>
+      <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+    </div>
+
+    <p class="eyebrow">블링블링 아이돌 라면 무대</p>
+    <h1 class="logo">치즈의<br>라면 끊이기</h1>
+    <p class="tagline">클릭하고 드래그해서 치즈라면을 끓인 다음,<br>스페이스와 엔터로 치즈를 쭉— 당겨요.</p>
+
+    <div class="title-art" aria-hidden="true">
+      <svg viewBox="0 0 220 120" class="title-bowl">
+        <ellipse cx="110" cy="78" rx="78" ry="22" fill="#ff8ec3"/>
+        <path d="M40 74 Q110 118 180 74" fill="#fff" stroke="#ffd0e6" stroke-width="4"/>
+        <path d="M52 74 Q110 104 168 74 Q110 96 52 74" fill="#ffd1ea"/>
+        <path d="M60 70 C75 40 90 78 110 48 C125 78 145 36 164 68" fill="none" stroke="#ffe08a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M70 66 C88 38 100 72 118 46" fill="none" stroke="#fff3b0" stroke-width="4" stroke-linecap="round"/>
+        <polygon points="96,44 108,44 102,58" fill="#ffd84a" stroke="#fff"/>
+        <polygon points="118,40 132,42 124,56" fill="#ffe56b" stroke="#fff"/>
+        <use href="#i-crown" x="78" y="0" width="64" height="42"/>
+      </svg>
+    </div>
+
+    <div class="mode-grid">
+      <button type="button" class="jewel big" data-mode="practice">연습 무대<span>손과 키를 천천히</span></button>
+      <button type="button" class="jewel" data-mode="easy">쉬움<span>4,000원 · 냄비 1</span></button>
+      <button type="button" class="jewel hot" data-mode="normal">보통<span>10,000원 · 냄비 2</span></button>
+      <button type="button" class="jewel" data-mode="hard">어려움<span>12,000원 · 냄비 3</span></button>
+    </div>
+
+    <div class="title-actions">
+      <button type="button" class="text-btn" id="open-guide">게임 방법</button>
+      <button type="button" class="text-btn mute">♪ 켜짐</button>
+    </div>
+    <p id="best" class="best"></p>
+  </section>
+
+  <section id="screen-game" class="screen">
+    <header class="hud">
+      <div class="hud-brand">
+        <svg viewBox="0 0 64 48" class="mini-crown"><use href="#i-crown"/></svg>
+        <div>
+          <strong id="mode-label">보통</strong>
+          <em id="goal-label">목표 10,000원</em>
+        </div>
+      </div>
+      <div class="hud-stat"><span>시간</span><b id="timer">1:30</b></div>
+      <div class="hud-stat money"><span>금액</span><b id="money">0원</b></div>
+      <div class="hud-stat"><span>콤보</span><b id="combo">0</b></div>
+      <div class="hud-stat"><span>그릇</span><b id="bowls">0</b></div>
+      <div class="hud-stat"><span>여분 냄비</span><b id="spares">2</b></div>
+      <div class="hud-buttons">
+        <button type="button" class="text-btn" id="open-guide-2">방법</button>
+        <button type="button" class="text-btn mute">♪ 켜짐</button>
+        <button type="button" class="text-btn" id="btn-title">타이틀</button>
+      </div>
+    </header>
+
+    <div class="garland slim" aria-hidden="true">
+      <svg viewBox="0 0 64 64"><use href="#i-heart"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-gem"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-pearl"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-ribbon"/></svg>
+      <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-pearl"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-gem"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-heart"/></svg>
+    </div>
+
+    <div id="hint" class="hint" aria-live="polite">재료를 냄비로 드래그하거나, 클릭한 다음 냄비를 클릭!</div>
+
+    <div class="stage">
+      <div class="kitchen">
+        <div id="pots" class="pots"></div>
+        <div class="counter" aria-hidden="true"></div>
+      </div>
+      <aside class="customer">
+        <div id="speech" class="speech">치즈라면 하나 부탁해~</div>
+        <svg id="fan" viewBox="0 0 160 210" aria-label="팬 블링이">
+          <g class="stick">
+            <rect x="118" y="126" width="8" height="64" rx="4" fill="#ffd84a" stroke="#fff" stroke-width="2"/>
+            <circle cx="122" cy="114" r="16" fill="#ff4d9a" stroke="#fff" stroke-width="3"/>
+            <circle cx="116" cy="108" r="4" fill="#fff"/>
+            <path d="M114 116 H130" stroke="#fff" stroke-width="2"/>
+          </g>
+          <circle cx="46" cy="86" r="20" fill="#ff7eb3"/>
+          <circle cx="114" cy="86" r="20" fill="#ff7eb3"/>
+          <path d="M55 150 Q80 132 105 150 L120 200 H40 Z" fill="#ff5fa2" stroke="#fff" stroke-width="3"/>
+          <path d="M68 150 Q80 166 92 150" fill="#ffe56b"/>
+          <circle cx="80" cy="78" r="36" fill="#ffe7d6"/>
+          <path d="M48 74 Q80 42 112 74 Q98 60 80 64 Q62 60 48 74" fill="#ff8ec3"/>
+          <use href="#i-crown" x="48" y="22" width="64" height="40"/>
+          <ellipse cx="66" cy="80" rx="5" ry="7" fill="#5a2744"/>
+          <ellipse cx="94" cy="80" rx="5" ry="7" fill="#5a2744"/>
+          <circle cx="68" cy="78" r="2" fill="#fff"/>
+          <circle cx="96" cy="78" r="2" fill="#fff"/>
+          <ellipse cx="54" cy="92" rx="6" ry="3.2" fill="#ffb3c7"/>
+          <ellipse cx="106" cy="92" rx="6" ry="3.2" fill="#ffb3c7"/>
+          <path id="fan-mouth" d="M70 98 Q80 106 90 98" stroke="#e84393" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+        <div class="fan-name">팬 블링이</div>
+      </aside>
+    </div>
+
+    <div class="shelf" id="shelf">
+      <div class="card" data-ingredient="noodle" role="button" tabindex="0">
+        <div class="ico">
+          <svg viewBox="0 0 80 80">
+            <ellipse cx="40" cy="58" rx="26" ry="10" fill="#ff8ec3"/>
+            <path d="M16 50 Q40 72 64 50" fill="#fff6fb" stroke="#ffd0e6" stroke-width="3"/>
+            <path d="M18 48 C28 20 32 58 42 28" fill="none" stroke="#ffe08a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M30 50 C40 18 48 60 62 26" fill="none" stroke="#fff3b0" stroke-width="4" stroke-linecap="round"/>
+            <path d="M24 46 C34 24 36 54 48 30" fill="none" stroke="#f0b429" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-name">생라면</div>
+        <div class="card-sub">드래그 · 클릭</div>
+      </div>
+      <div class="card" data-ingredient="soup" role="button" tabindex="0">
+        <div class="ico">
+          <svg viewBox="0 0 80 80">
+            <rect x="22" y="10" width="36" height="58" rx="6" fill="#ff8ec3" stroke="#fff" stroke-width="3"/>
+            <rect x="22" y="28" width="36" height="14" fill="#ffe56b"/>
+            <text x="40" y="24" text-anchor="middle" font-size="11" font-family="Jua, sans-serif" fill="#fff">치즈</text>
+            <text x="40" y="56" text-anchor="middle" font-size="11" font-family="Jua, sans-serif" fill="#6b2d4a">스프</text>
+            <polygon points="40,34 43,39 40,44 37,39" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="card-name">치즈스프</div>
+        <div class="card-sub">드래그 · 클릭</div>
+      </div>
+      <div class="card" data-ingredient="water" role="button" tabindex="0">
+        <div class="ico">
+          <svg viewBox="0 0 80 80">
+            <path d="M18 38 H46 Q58 38 58 50 Q58 64 44 64 H26 Q14 64 14 50 Q14 38 18 38Z" fill="#c9f3ff" stroke="#fff" stroke-width="3"/>
+            <path d="M46 42 H62 L70 34" fill="none" stroke="#7ad7ff" stroke-width="5" stroke-linecap="round"/>
+            <path d="M22 30 Q18 38 24 38" fill="none" stroke="#ffd84a" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="30" cy="50" r="5" fill="#ff8ec3" stroke="#fff"/>
+            <path d="M24 18 Q30 28 28 34" fill="none" stroke="#9aecff" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-name">물</div>
+        <div class="card-sub">부으면 불 시작</div>
+      </div>
+      <div class="card" data-ingredient="cheese" role="button" tabindex="0">
+        <div class="ico">
+          <svg viewBox="0 0 80 80">
+            <polygon points="14,58 40,14 66,58" fill="#ffe56b" stroke="#fff" stroke-width="3"/>
+            <circle cx="36" cy="40" r="4" fill="#fff6c8"/>
+            <circle cx="48" cy="48" r="3.5" fill="#fff6c8"/>
+            <polygon points="58,16 62,24 58,28 54,24" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="card-name">치즈</div>
+        <div class="card-sub">골든타임에</div>
+      </div>
+      <div class="card" data-ingredient="onion" role="button" tabindex="0">
+        <div class="ico">
+          <svg viewBox="0 0 80 80">
+            <path d="M34 58 Q30 30 38 12" fill="none" stroke="#7dce6a" stroke-width="6" stroke-linecap="round"/>
+            <path d="M42 58 Q48 32 44 14" fill="none" stroke="#b6ee7a" stroke-width="6" stroke-linecap="round"/>
+            <rect x="30" y="54" width="18" height="12" rx="4" fill="#fff" stroke="#ffd0e6"/>
+            <path d="M28 20 C18 16 18 30 28 26" fill="#ff8ec3"/>
+            <circle cx="27" cy="23" r="3" fill="#ffe56b"/>
+          </svg>
+        </div>
+        <div class="card-name">파</div>
+        <div class="card-sub">골든타임에</div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <div id="trash" class="drop trash" role="button" tabindex="0">
+        <svg viewBox="0 0 64 64" class="drop-ico"><use href="#i-ribbon"/></svg>
+        <div>
+          <strong>쓰레기통</strong>
+          <span>탄 냄비만</span>
+        </div>
+      </div>
+      <div id="tray" class="drop tray" role="button" tabindex="0">
+        <svg viewBox="0 0 64 64" class="drop-ico"><use href="#i-heart"/></svg>
+        <div>
+          <strong>하트 쟁반</strong>
+          <span>완성하면 여기로</span>
+        </div>
+      </div>
+      <div class="key-legend">
+        <div class="keycap" data-key="Space">스페이스</div>
+        <div class="keycap" data-key="Enter">엔터</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="rhythm" hidden>
+  <div class="rhythm-head">
+    <b>치즈 쭉— 당기기</b>
+    <span id="next-key">보석이 왕관에 닿으면!</span>
+  </div>
+  <div class="stretch" aria-hidden="true"><div id="stretch-fill"></div></div>
+  <div class="key-legend rhythm-keys">
+    <div class="keycap" data-key="Space">스페이스</div>
+    <div class="keycap" data-key="Enter">엔터</div>
+  </div>
+  <div id="runway" class="runway">
+    <div class="hit-zone" id="hit-zone">
+      <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+    </div>
+    <div id="notes"></div>
+  </div>
+</div>
+
+<div id="countdown" hidden>준비~</div>
+<div id="hand" hidden>👆</div>
+<div id="ghost" hidden></div>
+<div id="judge-layer"></div>
+
+<div id="practice-win" hidden>
+  <div class="banner">
+    <p>연습 성공! 치즈가 쭉 늘어났어.</p>
+    <div class="row">
+      <button type="button" class="jewel" id="practice-continue">계속 연습</button>
+      <button type="button" class="jewel hot" id="practice-go">보통 모드로</button>
+    </div>
+  </div>
+</div>
+
+<div id="result" hidden>
+  <div class="result-card">
+    <div class="garland slim" aria-hidden="true">
+      <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+      <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-heart"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-gem"/></svg>
+      <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+    </div>
+    <p id="result-kicker" class="eyebrow"></p>
+    <h2 id="result-title"></h2>
+    <div id="result-stars" class="stars"></div>
+    <p id="result-money" class="result-money"></p>
+    <p id="result-detail"></p>
+    <div class="row">
+      <button type="button" class="jewel hot" id="result-retry">한 번 더</button>
+      <button type="button" class="jewel" id="result-title">타이틀로</button>
+    </div>
+  </div>
+</div>
+
+<dialog id="guide">
+  <div class="garland slim" aria-hidden="true">
+    <svg viewBox="0 0 64 48"><use href="#i-crown"/></svg>
+    <svg viewBox="0 0 64 64"><use href="#i-heart"/></svg>
+    <svg viewBox="0 0 64 64"><use href="#i-star"/></svg>
+    <svg viewBox="0 0 64 64"><use href="#i-gem"/></svg>
+    <svg viewBox="0 0 64 64"><use href="#i-ribbon"/></svg>
+  </div>
+  <h3>치즈라면 끓이는 법</h3>
+  <ol>
+    <li>재료를 냄비로 <b>드래그</b>하거나, 카드를 <b>클릭한 뒤 냄비를 클릭</b>해요.</li>
+    <li><b>생라면</b>, <b>치즈스프</b>, <b>물</b>을 넣어요. 물을 붓는 순간 게이지가 차오르고, 끝까지 가면 냄비가 타요.</li>
+    <li>게이지의 <b>노란 칸(골든타임)</b>에 들어왔을 때 <b>치즈</b>와 <b>파</b>를 올려요.</li>
+    <li>냄비를 <b>하트 쟁반</b>으로 드래그해요. 냄비를 클릭한 다음 쟁반을 클릭해도 돼요.</li>
+    <li>보석이 왕관에 겹치는 순간, 보석에 적힌 <b>스페이스</b> 또는 <b>엔터</b>를 눌러요. 화면의 키를 눌러도 돼요.</li>
+    <li>탄 냄비는 <b>쓰레기통</b>으로 보내면 여분 냄비로 바뀌어요.</li>
+    <li>제한 시간 안에 목표 금액을 모으면 성공! 완벽한 한 그릇은 최대 1,000원, 콤보 보너스도 있어요.</li>
+  </ol>
+  <p class="guide-note">연습 무대는 불이 골든타임에서 멈춰서, 마우스랑 키를 천천히 익힐 수 있어요.</p>
+  <button type="button" class="jewel" id="guide-close">알겠어!</button>
+</dialog>
+
+<script src="game.js?v=2"></script>
+</body>
+</html>
