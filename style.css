@@ -732,3 +732,86 @@ body.countdown-on .pot { pointer-events: none; }
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Compact portrait gameplay: controls stay visible without page scrolling. */
+@media (max-width: 720px) and (orientation: portrait) {
+  html,body,#app { width:100%; height:100%; height:100dvh; overflow:hidden; }
+  .screen { height:100%; height:100dvh; min-height:0; }
+  #screen-title.active { padding: min(2vh,12px) 10px; gap:clamp(2px,1vh,8px); overflow:hidden; }
+  #screen-title .logo { font-size:clamp(35px,10vw,58px); }
+  #screen-title .title-bowl { width:min(34vw,135px); max-height:17dvh; }
+  #screen-title .tagline { font-size:clamp(13px,3.5vw,17px); margin:0; padding:5px 8px; }
+  #screen-title .mode-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,420px); gap:7px; margin:0; }
+  #screen-title .mode-grid .jewel { font-size:clamp(15px,4vw,19px); padding:8px 5px; }
+  #screen-title .mode-grid .jewel span { font-size:12px; }
+  #screen-title .garland svg { width:23px; height:23px; }
+  #screen-game.active {
+    height:100%; height:100dvh;
+    overflow:hidden; min-height:0;
+    padding: max(env(safe-area-inset-top),4px) 6px max(env(safe-area-inset-bottom),4px);
+    gap:clamp(2px,.65dvh,6px);
+    grid-template-rows:auto auto minmax(0,1fr) auto auto;
+  }
+  .hud { padding:4px 6px; gap:3px; flex-wrap:nowrap; border-radius:12px; }
+  .hud-brand { gap:2px; margin-right:0; min-width:0; }
+  .hud-brand strong { font-size:clamp(12px,3vw,16px); white-space:nowrap; }
+  .hud-brand em { display:none; }
+  .mini-crown { width:22px; height:20px; }
+  .hud-stat { min-width:0; padding:2px 4px; border-radius:9px; }
+  .hud-stat span { font-size:10px; }
+  .hud-stat b { font-size:clamp(12px,3vw,17px); }
+  .hud-buttons { gap:2px; margin-left:auto; }
+  .hud-buttons .text-btn { font-size:12px; padding:3px 6px; }
+  .hint { padding:3px 6px; font-size:clamp(11px,2.8vw,14px); white-space:normal; line-height:1.05; }
+  .stage { grid-template-columns:minmax(0,1fr) minmax(82px,26%); gap:4px; min-height:0; overflow:hidden; }
+  .kitchen { min-height:0; overflow:hidden; }
+  .pots { min-height:0; gap:clamp(2px,1.5vw,7px); padding:0 2px; align-items:flex-end; }
+  .pot,.pots.single .pot { width:min(27vw,106px); max-height:100%; }
+  .pots.single .pot { width:min(43vw,148px); }
+  .pot-body { height:clamp(48px,12dvh,95px); }
+  .pots.single .pot-body { height:clamp(62px,15dvh,120px); }
+  .pot-inner { left:9px;right:9px;top:12px;bottom:11px; }
+  .pot-rim { height:12px; }
+  .pot-status { font-size:12px; line-height:1; margin-top:2px; min-height:1em; }
+  .meter { height:10px; margin-top:3px; }
+  .pips { margin-top:1px; }
+  .pips i { width:5px;height:5px; }
+  .counter { height:10px; flex:none; }
+  .customer { min-width:0; min-height:0; padding:3px; flex-direction:column; align-self:stretch; border-radius:13px; overflow:hidden; justify-content:center; }
+  .speech { padding:4px; font-size:clamp(10px,2.7vw,14px); min-height:0; max-height:46%; overflow:hidden; line-height:1.05; border-radius:9px; }
+  .speech::after { display:none; }
+  #fan { width:min(24vw,95px); max-height:55%; }
+  .fan-name { font-size:clamp(11px,2.7vw,14px); margin:0; }
+  .shelf { gap:3px; grid-template-columns:repeat(5,minmax(0,1fr)); }
+  .card { min-width:0; padding:3px 1px; border-radius:10px; }
+  .ico svg { width:clamp(24px,8vw,38px); height:clamp(24px,8vw,38px); }
+  .card-name { font-size:clamp(11px,3vw,15px); white-space:nowrap; }
+  .card-sub { display:none; }
+  .action-row { grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; gap:3px; align-items:stretch; }
+  .drop { padding:3px; border-radius:10px; gap:3px; min-width:0; }
+  .drop-ico { width:22px;height:22px; }
+  .drop strong { font-size:clamp(11px,3vw,15px); }
+  .drop span { font-size:10px; }
+  .key-legend { grid-column:auto; gap:3px; justify-content:end; }
+  .keycap { min-width:0; padding:5px 6px; border-radius:9px; font-size:13px; }
+  #rhythm { bottom:max(4px,env(safe-area-inset-bottom)); width:calc(100% - 8px); padding:6px; border-radius:12px; }
+  .runway { height:clamp(44px,10dvh,70px); }
+  .rhythm-head b { font-size:18px; }
+  .rhythm-keys { margin-bottom:3px; }
+  .rhythm-keys .keycap { min-width:36%; font-size:16px; padding:7px; }
+  .note { width:55px;height:33px;font-size:13px; }
+  .hit-zone { width:48px; }
+  .hit-zone svg { width:36px;height:30px; }
+  .banner,.result-card { max-height:88dvh; overflow:auto; }
+  dialog { max-height:85dvh; }
+}
+@media (max-width:720px) and (orientation:portrait) and (max-height:690px) {
+  #screen-game.active { gap:2px; }
+  .stage { grid-template-columns:minmax(0,1fr) 24%; }
+  .pot-body { height:clamp(40px,9dvh,66px); }
+  .pots.single .pot-body { height:clamp(53px,12dvh,85px); }
+  .ico svg { width:26px;height:26px; }
+  .card { padding:1px; }
+  .hud-brand strong { font-size:11px; }
+  .hud-stat b { font-size:12px; }
+}
